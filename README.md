@@ -1,5 +1,7 @@
 # gibson
-An unintrusive bot that adds missing functionality to your Discord server. 
+An unintrusive bot that adds missing functionality to your Discord server.
+
+Any alterations or restributions of this project MUST follow the license and be provided not only for free, but with open source. If you can not adhere to the license, write your own bot.
 
 This was originally written and created in August 2021. It has been 1 year since inception so I am making the source public.
 
