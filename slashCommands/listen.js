@@ -109,7 +109,10 @@ module.exports = {
         const embed = new MessageEmbed()
         embed.setTitle("Pausing song.")
         embed.setColor("#00a663")
-        embed.addField(`Requested by:`, `${interaction.member.nickname || interaction.member.user.username}`)
+        embed.addFields({
+          name: `Requested by:`, 
+          value: `${interaction.member.nickname || interaction.member.user.username}`
+        })
         serverContruct.textChannel.send({embeds: [embed]})
         
         return interaction.editReply("Gibson audio player has been paused.")
@@ -125,7 +128,10 @@ module.exports = {
       const embed = new MessageEmbed()
       embed.setTitle("Stopping Gibson player.")
       embed.setColor("#00a663")
-      embed.addField(`Requested by:`, `${interaction.member.nickname || interaction.member.user.username}`)
+      embed.addFields({
+        name: `Requested by:`, 
+        value: `${interaction.member.nickname || interaction.member.user.username}`
+      })
       serverContruct.textChannel.send({embeds: [embed]})
       
       serverContruct.player.stop()
@@ -138,7 +144,10 @@ module.exports = {
       const embed = new MessageEmbed()
       embed.setTitle(`Resuming: ${serverContruct.songs[0].title}`)
       embed.setColor("#00a663")
-      embed.addField(`Requested by:`, `${interaction.member.nickname || interaction.member.user.username}`)
+      embed.addFields({
+        name: `Requested by:`, 
+        value: `${interaction.member.nickname || interaction.member.user.username}`
+      })
       serverContruct.textChannel.send({embeds: [embed]})
 
       interaction.editReply("Gibson audio player is resuming...")
@@ -245,7 +254,10 @@ module.exports = {
         const embed = new MessageEmbed()
         embed.setTitle("Queued:")
         embed.setColor("#00a663")
-        embed.addField(`${song.title}:`, `[${song.url}](${song.url})`)
+        embed.addFields({
+          name: `${song.title}:`, 
+          value: `[${song.url}](${song.url})`
+        })
         embed.setFooter(`Requested by: ${song.requested}`)
         return interaction.channel.send({embeds: [embed]})
       }
@@ -291,8 +303,14 @@ const play = async (serverContruct, guild, song) => {
     const embed = new MessageEmbed()
     embed.setTitle("Started playing:")
     embed.setColor("#04ea8e")
-    embed.addField(`${song.title}:`, `[${song.url}](${song.url})`)
-    embed.addField(`Requested by:`, `${song.requested}`)
+    embed.addFields({
+      name: `${song.title}:`, 
+      value: `[${song.url}](${song.url})`
+    },
+    {
+      name: `Requested by:`, 
+      value: `${song.requested}`
+    })
     serverContruct.textChannel.send({embeds: [embed]})
   }
   catch(err){
