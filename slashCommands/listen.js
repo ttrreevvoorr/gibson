@@ -178,9 +178,9 @@ module.exports = {
          shuffleArr[j] = temp
       }
 
-      serverContruct.songs = array
+      serverContruct.songs = shuffleArr
 
-      serverContruct = memory.setServerQueue(interaction.guild.id, array)
+      serverContruct = memory.setServerQueue(interaction.guild.id, shuffleArr)
       return
     }
 
