@@ -1,5 +1,9 @@
 # gibson
-An unintrusive bot that adds missing functionality to your Discord server
+An unintrusive bot that adds missing functionality to your Discord server. 
+
+You may host this yourself, or run the version I have hosted:
+
+<https://discord.com/oauth2/authorize?client_id=880346290490322975&permissions=37080919104&scope=bot+applications.commands>
 
 
 ## Commands:
