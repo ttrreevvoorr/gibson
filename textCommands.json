@@ -1,0 +1,13 @@
+{
+  "879445670040330250": {
+    "textCommands": [
+      {
+        "triggers": [
+          "minecraft",
+          "mc"
+        ],
+        "response": "Server IP: **0.0.0.0**"
+      }
+    ]
+  }
+}

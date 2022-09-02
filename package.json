@@ -1,0 +1,39 @@
+{
+  "name": "gibson",
+  "version": "0.1.2",
+  "description": "Discord bot that provides missing features to your server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --trace-warnings index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "discord-musicbot",
+    "discord-music",
+    "discord-polls",
+    "discord-poll",
+    "discord-reminder",
+    "discord-reminders"
+  ],
+  "author": "ttrreevvoorr",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.6.0",
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "@discordjs/voice": "^0.6.0",
+    "discord-api-types": "^0.22.0",
+    "discord-speech-recognition": "^1.0.6",
+    "discord.js": "^13.1.0",
+    "dotenv": "^16.0.2",
+    "https": "^1.0.0",
+    "human-interval": "^2.0.1",
+    "path": "^0.12.7",
+    "soundcloud-downloader": "^1.0.0",
+    "ytdl": "^1.4.1",
+    "ytdl-core": "^4.11.1",
+    "ytsr": "^3.5.3"
+  }
+}

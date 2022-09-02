@@ -1,0 +1,20 @@
+{
+  "879445670040330250":{
+    "voiceCommands": [
+      {
+        "triggers": [
+          "noob"
+        ],
+        "response": "noob_NLwTWAV.mp3",
+        "volume": null
+      },
+      {
+        "triggers": [
+          "dono"
+        ],
+        "response": "donate-alert.mp3",
+        "volume": 0.8
+      }
+    ]
+  }
+}
