@@ -168,7 +168,7 @@ module.exports = {
       embed.setFooter(`Requested by: ${interaction.member.nickname || interaction.member.user.username}`)
       serverContruct.textChannel.send({embeds: [embed]})
       
-      const shuffleArr = serverConstruct.songs
+      const shuffleArr = serverContruct.songs
       for (let i = shuffleArr.length - 1; i > 0; i--) {
         // Generate random number
          const j = Math.floor(Math.random() * (i + 1))
