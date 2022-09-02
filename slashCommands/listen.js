@@ -160,7 +160,9 @@ module.exports = {
       const embed = new MessageEmbed()
       embed.setTitle(`Skipping ${serverContruct.songs[0].title}`)
       embed.setColor("#00a663")
-      embed.setFooter(`Requested by: ${interaction.member.nickname || interaction.member.user.username}`)
+      embed.setFooter({
+        text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
+      })
       serverContruct.textChannel.send({embeds: [embed]})
 
       serverContruct.songs.shift()
@@ -174,7 +176,9 @@ module.exports = {
       const embed = new MessageEmbed()
       embed.setTitle(`Shuffling`)
       embed.setColor("#00a663")
-      embed.setFooter(`Requested by: ${interaction.member.nickname || interaction.member.user.username}`)
+      embed.setFooter({
+        text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
+      })
       serverContruct.textChannel.send({embeds: [embed]})
       
       const shuffleArr = serverContruct.songs
@@ -258,7 +262,7 @@ module.exports = {
           name: `${song.title}:`, 
           value: `[${song.url}](${song.url})`
         })
-        embed.setFooter(`Requested by: ${song.requested}`)
+        embed.setFooter({text:`Requested by: ${song.requested}`})
         return interaction.channel.send({embeds: [embed]})
       }
       console.log("No queue!")
