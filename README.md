@@ -1,10 +1,10 @@
-
 <p align="center">
     <img width="200" src="https://i.imgur.com/SOx6dR1.png" alt="gibson's avatar image">
 </p>
 
 
 # Gibson
+
 An unintrusive bot that adds missing functionality to your Discord server.
 
 Any alterations or restributions of this project MUST follow the license and be provided not only for free, but with open source. If you can not adhere to the license, write your own bot.
