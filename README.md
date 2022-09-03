@@ -51,9 +51,9 @@ Now when sending the message `!minecraft` or `!mc` in any text channel, Gibson w
 ---
 
 ### /deletecommand
-`/deltecommand` `trigger:`
+`/deletecommand` `trigger:`
 
-Adds a bang command `!command` to Gibson, allowing predetermined responses.
+Removes a bang command `!command` from Gibson, removing the existing predetermined response.
 
 | param        | Description             | Example           |
 |--------------|-------------------------|-------------------|
