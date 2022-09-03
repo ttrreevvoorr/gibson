@@ -50,7 +50,7 @@ Now when sending the message `!minecraft` or `!mc` in any text channel, Gibson w
 
 ---
 
-### /deltecommand
+### /deletecommand
 `/deltecommand` `trigger:`
 
 Adds a bang command `!command` to Gibson, allowing predetermined responses.
@@ -64,6 +64,37 @@ Example: `/deletecommand triggers:minecraft`
 Now when sending the message `!minecraft` or `!mc` in any text channel, Gibson will send respond with "0.0.0.0"
 
 <img width="400" src="https://imgur.com/t0W5Xtd.png" alt="screenshot of gibson response to deleteing a command">
+
+---
+
+
+### /dice
+`/dice` `number:`
+
+Rolls a dice for you, with number being the max sides of the dice. Defaults to 6.
+
+| param      | Description             | Example           |
+|------------|-------------------------|-------------------|
+| number     | Allows you to roll a dice with more or less than 6 sides. Default is 6. | 12     |
+
+Example: `/dice number:12`
+
+<img width="400" src="https://imgur.com/vpK7bVz.png" alt="screenshot of gibson saying, buttface6t4 rolled a 2 on a 12-sided dice!'">
+
+---
+
+### /help
+`/help` `command:`
+
+Returns information about a command within Discord, similar to `man` or `manual`.
+
+| param       | Description             | Example           |
+|-------------|-------------------------|-------------------|
+| command     | The command you need help with | poll     |
+
+<img width="300" src="https://imgur.com/L9MIHMa.png" alt="screenshot of gibson help interface">
+
+<img width="500" src="https://imgur.com/q0y9bCL.png" alt="screenshot of gibson's response to /help command:/poll">
 
 ---
 
