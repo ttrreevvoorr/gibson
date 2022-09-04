@@ -1,7 +1,12 @@
+require('dotenv').config()
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { MessageEmbed } = require("discord.js")
 const ytdl = require("ytdl-core")
 const ytsr = require("ytsr")
+
+const spotifyToYT = require("./../spotify-to-yt.js")
+spotifyToYT.setCredentials(process.env.SPOTIFY_CLIENT_ID,process.env.SPOTIFY_SECRET_KEY)
+
 const scdl = require("soundcloud-downloader").default
 const scClientId = process.env.SOUNDCLOUD_ID
 
@@ -201,6 +206,7 @@ module.exports = {
 
     let song,
       songInfo,
+      playlistInfo = {},
       youtubeURL = "",
       soundcloudURL = "",
       requested = interaction.member.nickname || interaction.member.user.username
@@ -229,6 +235,20 @@ module.exports = {
         requested
       }
     }
+    else if (songURL.includes("spotify")) {
+      spotifyPlaylist = true
+      playlistInfo = await spotifyToYT.playListGet(songURL)
+
+      song = playlistInfo.songs.map(song => {
+        return {
+          title: song.title,
+          url: song.url,
+          type: "youtube",
+          requested
+        }
+      })
+
+    }
     else {
       const searchResults = await ytsr(songURL, {limit: 10});
       if(searchResults.items[0]){
@@ -248,28 +268,59 @@ module.exports = {
         })
       }
     }
+
+    if(Array.isArray(song)){
+      let content = "Processing:"
+
+      song.map(s => {
+        content += `\n- ${s.title}`
+        serverContruct = memory.appendToServerQueue(interaction.guild.id, s)
+      })
+      await interaction.followUp({content, ephemeral: true})
+
+      const embed = new MessageEmbed()
+      embed.setTitle("Queued:")
+      embed.setColor("#00a663")
+      console.log("\n\n",playlistInfo)
+      embed.addFields({
+        name: `${playlistInfo.info.name}:`, 
+        value: `${playlistInfo.info.external_urls.spotify}`
+      })
+      embed.setFooter({text:`Requested by: ${song[0].requested}`})
+      
+      interaction.channel.send({embeds: [embed]})
+    }
+    else {
+      await interaction.followUp({ content: `Processing **${song.title}**...`, ephemeral: true });
     
-    await interaction.followUp({ content: `Processing **${song.title}**...`, ephemeral: true });
+      if (youtubeURL || soundcloudURL) {
+        if (serverContruct.songs.length) {
 
-    if (youtubeURL || soundcloudURL) {
-      if (serverContruct.songs.length) {
-
+          serverContruct = memory.appendToServerQueue(interaction.guild.id, song)
+          const embed = new MessageEmbed()
+          embed.setTitle("Queued:")
+          embed.setColor("#00a663")
+          embed.addFields({
+            name: `${song.title}:`, 
+            value: `[${song.url}](${song.url})`
+          })
+          embed.setFooter({text:`Requested by: ${song.requested}`})
+          return interaction.channel.send({embeds: [embed]})
+        }
+        console.log("No queue!")
         serverContruct = memory.appendToServerQueue(interaction.guild.id, song)
-        const embed = new MessageEmbed()
-        embed.setTitle("Queued:")
-        embed.setColor("#00a663")
-        embed.addFields({
-          name: `${song.title}:`, 
-          value: `[${song.url}](${song.url})`
-        })
-        embed.setFooter({text:`Requested by: ${song.requested}`})
-        return interaction.channel.send({embeds: [embed]})
       }
-      console.log("No queue!")
-      serverContruct = memory.appendToServerQueue(interaction.guild.id, song)
+    }
 
       try {
-        await play(serverContruct, interaction.guild, song)
+        if(serverContruct.songs.length){
+          if(Array.isArray(song)){
+            await play(serverContruct, interaction.guild, song[0])
+          }
+          else {
+            await play(serverContruct, interaction.guild, song)
+          }
+        }
       }
       catch (err) {
         console.log(err)
@@ -280,7 +331,6 @@ module.exports = {
         return interaction.editReply(err)
       }
     }
-  }
 }
 
 
