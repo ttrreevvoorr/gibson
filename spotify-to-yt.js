@@ -22,27 +22,6 @@ module.exports = {
    * Returns a YouTube URL to play music with the "play" property of your preferred music npm.
    * @param {String} url Spotify URL
    * @returns YouTube Info
-   * @example
-   * const Discord = require("discord.js") //Define Discord
-   * const client = new Discord.Client() //Define client
-   * const Distube = require("distube") //Define Distube
-   * client.distube = new Distube(client, { searchSongs: 10 }) //Define Distube Client
-   * const spotifyToYT = require("spotify-to-yt") //Define package
-   * const settings = {
-   *    prefix: "!", //Define bot prefix
-   *    token: "Discord Bot Token" //Define bot token
-   * }
-   *
-   * client.on('message', async message => { //Create message event
-   *    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g) //Define args
-   *    const command = args.shift().toLowerCase() //Define command
-   *
-   *    if (command === "play") { //Create new command
-   *      const track = args.join(" ") //Define URL
-   *      const result = await spotifyToYT.trackGet(track) //Obtain YouTube link of Spotify
-   *      client.distube.play(message, result.url).catch(e => console.error(e)) //Play music with message parameter and result constant
-   *    }
-   * })
    */
   trackGet: async (url) => {
     if (!url) throw new Error("You did not specify the URL of Spotify!");
@@ -62,35 +41,12 @@ module.exports = {
    * Returns an Array of YouTube music URL's to play a playlist with your preferred music npm.
    * @param {String} url Spotify URL
    * @returns Array with YouTube URL's
-   * @example
-   * const Discord = require("discord.js") //Define Discord
-   * const client = new Discord.Client() //Define client
-   * const Distube = require("distube") //Define Distube
-   * client.distube = new Distube(client, { searchSongs: 10 }) //Define Distube Client
-   * const spotifyToYT = require("spotify-to-yt") //Define package
-   * const settings = {
-   *    prefix: "!", //Define bot prefix
-   *    token: "Discord Bot Token" //Define bot token
-   * }
-   *
-   * client.on('message', async message => { //Create message event
-   *    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g) //Define args
-   *    const command = args.shift().toLowerCase() //Define command
-   *
-   *    if (command === "playlist") { //Create new command
-   *      const playlist = args.join(" ") //Define URL
-   *      const result = await spotifyToYT.playListGet(playlist) //Obtain YouTube link of Spotify
-   *      client.distube.playCustomresult(message, result.songs, { name: result.info.name, thumbnail: result.info.images[0].url, url: result.info.externals_url.spotify }).catch(e => console.error(e)) //Play playlist with message parameter, and get YouTube links of Spotify in Array
-   *    }
-   * })
    */
   playListGet: async (url) => {
-    console.log(url)
     if (!url) throw new Error("You did not specify the URL of Spotify!");
     await validateURL(url);
     let data = await getData(url);
     let tracks = await getTracks(url);
-    console.log(data)
     try {
       if (data.type !== "playlist") throw new Error("The URL is invalid!");
       var songs = [];
@@ -99,7 +55,6 @@ module.exports = {
           `${song.name} ${song.artists.map((x) => x.name).join(" ")}`,
           { limit: 1 }
         );
-        console.log("\n\n",search)
         songs.push({title:song.name,url:search.items[0].url});
       }
       var infoPlayList = await getData(url);
@@ -115,106 +70,10 @@ module.exports = {
     }
   },
   /**
-   * Returns a String, if it is a playlist or a track
-   * @param {String} url
-   * @returns String
-   * @example
-   * const Discord = require("discord.js") //Define Discord
-   * const client = new Discord.Client() //Define client
-   * const Distube = require("distube") //Define Distube
-   * client.distube = new Distube(client, { searchSongs: 10 }) //Define Distube Client
-   * const spotifyToYT = require("spotify-to-yt") //Define package
-   * const settings = {
-   *    prefix: "!", //Define bot prefix
-   *    token: "Discord Bot Token" //Define bot token
-   * }
-   *
-   * client.on('message', async message => { //Create message event
-   *    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g) //Define args
-   *    const command = args.shift().toLowerCase() //Define command
-   *
-   *    if (command === "spotifyvalidator") { //Create new command
-   *      const result = await spotifyToYT.isTrackOrPlaylist(args.join(" ")) //Verify Spotify URL
-   *      message.channel.send("The link is: " result) //Send message
-   *    }
-   * })
-   */
-  isTrackOrPlaylist: async (url) => {
-    if (!url) throw new Error("You did not specify the URL of Spotify!");
-    await validateURL(url);
-    let data = await getData(url);
-    return data.type;
-  },
-  /**
-   * Validate a URL from Spotify and return a Boolean as the result
-   * @param {String} url Spotify URL
-   * @returns Boolean
-   * @example
-   * const Discord = require("discord.js") //Define Discord
-   * const client = new Discord.Client() //Define client
-   * const Distube = require("distube") //Define Distube
-   * client.distube = new Distube(client, { searchSongs: 10 }) //Define Distube Client
-   * const spotifyToYT = require("spotify-to-yt") //Define package
-   * const settings = {
-   *    prefix: "!", //Define bot prefix
-   *    token: "Discord Bot Token" //Define bot token
-   * }
-   *
-   * client.on('message', async message => { //Create message event
-   *    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g) //Define args
-   *    const command = args.shift().toLowerCase() //Define command
-   *
-   *    if (command === "validatelink") { //Create new command
-   *      const result = await spotifyToYT.validateURL(args.join(" ")) //Validate Spotify URL
-   *      if (result === false) return message.channel.send("The link is invalid!") //If the link is not valid, we make a conditional and put what we want it to return
-   *    }
-   * })
-   */
-  validateURL: async (url) => {
-    console.log(url)
-    if (!url) throw new Error("You did not specify the URL of Spotify!");
-    if (typeof url !== "string") return false;
-    let regexp =
-      /(https?:\/\/open.spotify.com\/(playlist|track)\/[a-zA-Z0-9]+|spotify:(playlist|track):[a-zA-Z0-9])/g;
-    if (regexp.test(url)) {
-      let parsedURL = {};
-      try {
-        parsedURL = spotifyURI.parse(url);
-        if (!supportedTypes.includes(parsedURL.type)) return false;
-        if (!parsedURL) return false;
-        return true;
-      } catch (e) {
-        return false;
-      }
-    } else return false;
-  },
-  /**
    * Search for tracks on Spotify, where it returns a URL
    * @param {String} search Term of search
    * @returns String
    * @example
-   * const Discord = require("discord.js") //Define Discord
-   * const client = new Discord.Client() //Define client
-   * const Distube = require("distube") //Define Distube
-   * client.distube = new Distube(client, { searchSongs: 10 }) //Define Distube Client
-   * const spotifyToYT = require("spotify-to-yt") //Define package
-   * const settings = {
-   *    prefix: "!", //Define bot prefix
-   *    token: "Discord Bot Token", //Define bot token
-   *    clientID: "Client Spotify App ID", //Define Spotify Client ID, obtain of 'https://developer.spotify.com/dashboard/'
-   *    secretKey: "Secret Key Spotify App" //Define Secret Key, obtain of 'https://developer.spotify.com/dashboard/'
-   * }
-   * spotifyToYT.setCredentials(settings.clientID, settings.secretKey) //Set credentials for method 'trackSearch'
-   *
-   * client.on('message', async message => { //Create message event
-   *    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g) //Define args
-   *    const command = args.shift().toLowerCase() //Define command
-   *
-   *    if (command === "spotify-search") { //Create new command
-   *      const result = await spotifyToYT.trackSearch(args.join(" ")).catch(e => message.channel.send("No results")) //Declare result, with trackSearch property, and catch for errors
-   *      message.channel.send(result.url) //Send message with URL of Spotify
-   *    }
-   * })
    */
   trackSearch: async (search) => {
     if (!search)

@@ -91,8 +91,7 @@ module.exports = {
       })
 
       serverContruct.player.on(AudioPlayerStatus.Idle, async (data) => {
-        console.log(AudioPlayerStatus.Idle)
-        console.log(data)
+        //console.log("AudioPlayerStatus.Idle")
         serverContruct = memory.getServerContruct(interaction.guild.id)
   
         serverContruct.songs.shift()
@@ -281,7 +280,6 @@ module.exports = {
       const embed = new MessageEmbed()
       embed.setTitle("Queued:")
       embed.setColor("#00a663")
-      console.log("\n\n",playlistInfo)
       embed.addFields({
         name: `${playlistInfo.info.name}:`, 
         value: `${playlistInfo.info.external_urls.spotify}`
