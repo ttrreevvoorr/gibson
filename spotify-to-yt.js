@@ -1,9 +1,9 @@
-
 const fetch = require('isomorphic-unfetch')
 const { getData, getPreview, getTracks, getDetails } = require('spotify-url-info')(fetch)
 
 const spotifyURI = require("spotify-uri");
-const yt = require("youtube-sr").default;
+// const yt = require("youtube-sr").default;
+const ytsr = require("ytsr")
 const supportedTypes = ["playlist", "track"];
 const spotifySearch = require("@ksolo/spotify-search");
 
@@ -50,7 +50,7 @@ module.exports = {
     let data = await getData(url);
     if (data.type === "track") {
       let query = `${data.name} ${data.artists.map((x) => x.name).join(" ")}`;
-      let search = await yt.search(query, { limit: 1, type: "video" });
+      let search = await ytsr(query, { limit: 1 });
       if (!search) throw new Error("I found no results on YouTube.");
       return {
         url: search[0].url,
@@ -95,11 +95,12 @@ module.exports = {
       if (data.type !== "playlist") throw new Error("The URL is invalid!");
       var songs = [];
       for (const song of tracks) {
-        let search = await yt.search(
+        let search = await ytsr(
           `${song.name} ${song.artists.map((x) => x.name).join(" ")}`,
-          { limit: 1, type: "video" }
+          { limit: 1 }
         );
-        songs.push({title:song.name,url:search[0].url});
+        console.log("\n\n",search)
+        songs.push({title:song.name,url:search.items[0].url});
       }
       var infoPlayList = await getData(url);
       return {
