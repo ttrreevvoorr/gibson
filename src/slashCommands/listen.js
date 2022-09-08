@@ -126,7 +126,6 @@ module.exports = {
             value: `${interaction.member.nickname || interaction.member.user.username}`
           })
           serverContruct.textChannel.send({embeds: [embed]})
-          
           return interaction.editReply("Gibson audio player has been paused.")
         }
         else {
@@ -137,7 +136,6 @@ module.exports = {
       // PLAY
       case "play":
         const songURL = interaction.options.getString("song")
-
 
         if(!songURL){
           return interaction.editReply("There was no song identified in your command. Please try again.")
@@ -217,7 +215,7 @@ module.exports = {
           interaction.channel.send({embeds: [embed]})
         }
         else {
-          await interaction.followUp({ content: `Processing **${song.title}**...`, ephemeral: true });
+          await interaction.followUp({ content: `Processing **${song.title}**...`, ephemeral: true })
         
           if (youtubeURL || soundcloudURL) {
             if (serverContruct.songs.length) {
@@ -230,9 +228,9 @@ module.exports = {
                 value: `[${song.url}](${song.url})`
               })
               embed.setFooter({text:`Requested by: ${song.requested}`})
+              console.log(`${guild.id}: Queued ${song.title}`)
               return interaction.channel.send({embeds: [embed]})
             }
-            console.log("No queue!")
             serverContruct = memory.appendToServerQueue(interaction.guild.id, song)
           }
         }
@@ -370,15 +368,17 @@ const play = async (serverContruct, guild, song) => {
       name: `Requested by:`, 
       value: `${song.requested}`
     })
+    console.log(`${guild.id}: Started playing ${song.title}`)
     serverContruct.textChannel.send({embeds: [embed]})
   }
   catch(err){
-    //console.error(err)
+    console.error(err)
     serverContruct.textChannel.send(`There was an issue processing [${song.title}](${song.url})`)
+    console.log(`${guild.id}: There was an issue processing [${song.title}](${song.url}`)
     
     serverContruct.songs.shift()
 
-    serverContruct = memory.setServerQueue(interaction.guild.id, serverContruct.songs)
-    return await play(serverContruct, interaction.guild, serverContruct.songs[0], memory)
+    serverContruct = memory.setServerQueue(guild.id, serverContruct.songs)
+    return await play(serverContruct, guild, serverContruct.songs[0], memory)
   }
 }
