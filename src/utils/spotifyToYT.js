@@ -51,13 +51,15 @@ module.exports = {
       if (data.type !== "playlist") throw new Error("The URL is invalid!");
       var songs = [];
       for (const song of tracks) {
-        let search = await ytsr(
-          `${song.name} ${song.artists.map((x) => x.name).join(" ")}`,
-          { limit: 1 }
-        );
-        songs.push({title:song.name,url:search.items[0].url});
+        if(song){
+          let search = await ytsr(
+            `${song.name} ${song.artists.map((x) => x.name).join(" ")}`,
+            { limit: 1 }
+          );
+          songs.push({title:String(song.name),url:search.items[0].url});
+        }
       }
-      var infoPlayList = await getData(url);
+      const infoPlayList = await getData(url);
       return {
         songs: songs,
         info: infoPlayList,
