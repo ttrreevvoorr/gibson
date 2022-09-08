@@ -24,7 +24,7 @@ class MemoryMom {
   }
 
   getServerContruct(guildId) {
-    if( !guildId ) return false
+    if(!guildId) return false
     if (!this.serverContructs[guildId]) {
       this.serverContructs[guildId] = {
         songs: []
@@ -34,7 +34,7 @@ class MemoryMom {
   }
 
   appendToServerQueue(guildId, song) {
-    if( !guildId || !song) return false
+    if(!guildId || !song) return false
     this.serverContructs[guildId] = this.getServerContruct(guildId)
     this.serverContructs[guildId].songs = [ 
       ...this.serverContructs[guildId].songs,
@@ -51,6 +51,12 @@ class MemoryMom {
     }
     return this.serverContructs[guildId]
   }
+
+  getServerQueue(guildId) {
+    if(!guildId) return []
+    return this.serverContructs[guildId].songs || []
+  }
+
 
 }
 
