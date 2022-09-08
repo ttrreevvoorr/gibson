@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { readFile } = require("../helpers")
+const { readFile } = require("../utils/helpers")
 const { MessageEmbed } = require("discord.js")
-const voiceFileName = 'voiceCommands.json'
-const textFileName = 'textCommands.json'
+const voiceFileName = '../../serverCommands/voiceCommands.json'
+const textFileName = '../../serverCommands/textCommands.json'
 
 module.exports = {
   data: new SlashCommandBuilder()

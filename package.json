@@ -4,7 +4,7 @@
   "description": "Discord bot that provides missing features to your server",
   "main": "index.js",
   "scripts": {
-    "start": "node --trace-warnings index.js",
+    "start": "node --trace-warnings ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

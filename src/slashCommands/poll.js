@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const pollEmbed = require("../pollembed");
+const pollEmbed = require("../embeds/pollembed");
 
 module.exports = {
   data: new SlashCommandBuilder()
