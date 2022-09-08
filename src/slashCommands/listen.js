@@ -91,16 +91,27 @@ module.exports = {
 
       serverContruct.player.on(AudioPlayerStatus.Idle, async (data) => {
         serverContruct = memory.getServerContruct(interaction.guild.id)
-  
+
         serverContruct.songs.shift()
         serverContruct = memory.setServerQueue(interaction.guild.id, serverContruct.songs)
+
+        if(!serverContruct.songs.length){
+          serverContruct.player.stop()
+          serverContruct.connection.destroy()
+          serverContruct = {}
+          return serverContruct = memory.setServerConnection(interaction.guild.id, {songs:[]}, true)
+        }
         return await play(serverContruct, interaction.guild, serverContruct.songs[0], memory)
       })
 
       serverContruct.player.on(AudioPlayerStatus.AutoPaused, () => {
-        setTimeout(() => {
-          serverContruct.player.unpause()
-        }, 8500)
+        embed.setTitle("Something went wrong")
+        embed.setColor("#FF0000")
+        embed.addFields({
+          name: `Gibson failed to operate accordinfly`, 
+          value: `Please try again shortly.`
+        })
+        return interaction.channel.send({embeds: [embed]})
       })
 
       memory.setServerConnection(interaction.guild.id, serverContruct)
