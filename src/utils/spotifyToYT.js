@@ -1,23 +1,11 @@
-const fetch = require('isomorphic-unfetch')
-const { getData, getPreview, getTracks, getDetails } = require('spotify-url-info')(fetch)
+const fetch = require("isomorphic-unfetch")
+const { getData, getPreview, getTracks, getDetails } = require("spotify-url-info")(fetch)
 
 const spotifyURI = require("spotify-uri");
-// const yt = require("youtube-sr").default;
 const ytsr = require("ytsr")
 const supportedTypes = ["playlist", "track"];
-const spotifySearch = require("@ksolo/spotify-search");
 
 module.exports = {
-  /**
-   * Set credentials for method 'trackSearch'
-   * @param {String} clientID Client ID of Spotify App
-   * @param {String} secretKey Secret Key of Spotify App
-   * @returns Void
-   */
-  setCredentials: async (clientID, secretKey) => {
-    spotifySearch.setCredentials(clientID, secretKey);
-    return;
-  },
   /**
    * Returns a YouTube URL to play music with the "play" property of your preferred music npm.
    * @param {String} url Spotify URL
@@ -70,28 +58,7 @@ module.exports = {
           e
       );
     }
-  },
-  /**
-   * Search for tracks on Spotify, where it returns a URL
-   * @param {String} search Term of search
-   * @returns String
-   * @example
-   */
-  trackSearch: async (search) => {
-    if (!search)
-      throw new Error("You did not specify term of search on Spotify!");
-    let term = await spotifySearch.search(search);
-    let result;
-    try {
-      result = term;
-    } catch (e) {
-      result = undefined;
-    }
-    return {
-      url: result.tracks.items[0].external_urls.spotify,
-      info: result,
-    };
-  },
+  }
 };
 
 async function validateURL(url) {

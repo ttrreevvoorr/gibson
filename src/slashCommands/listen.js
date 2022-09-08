@@ -5,7 +5,6 @@ const ytdl = require("ytdl-core")
 const ytsr = require("ytsr")
 
 const spotifyToYT = require("../utils/spotifyToYT.js")
-spotifyToYT.setCredentials(process.env.SPOTIFY_CLIENT_ID,process.env.SPOTIFY_SECRET_KEY)
 
 const scdl = require("soundcloud-downloader").default
 const scClientId = process.env.SOUNDCLOUD_ID
