@@ -39,8 +39,6 @@ const client = new Discord.Client({
   ]
 })
 
-
-
 // Initiate commands:
 client.commands = new Collection()
 const commandFiles = fs.readdirSync("./src/slashCommands").filter(file => file.endsWith(".js"))
@@ -53,16 +51,13 @@ client.on("ready", () => {
 })
 
 client.on("messageCreate", messageCreate)
-
 // client.on("voiceStateUpdate", (msg, err) => {})
-
 // client.on("guildMemberSpeaking", (msg, err) => {})
 
 client.on("interactionCreate", async interaction => {
   if (!interaction.isCommand()) return
   
   const command = client.commands.get(interaction.commandName)
-
   if (!command) return
 
   try {
@@ -78,9 +73,9 @@ client.on("interactionCreate", async interaction => {
 })
 
 client.on("disconnect", message => {
-  console.log("dying...")
+  console.log("Dying...")
   console.log(message)
-  process.exit(1)
+ // process.exit(1)
 })
 
 client.login(token)

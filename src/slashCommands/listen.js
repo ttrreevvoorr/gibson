@@ -115,7 +115,7 @@ module.exports = {
       requested = interaction.member.nickname || interaction.member.user.username
       
     switch(interaction.options.getSubcommand()){
-    // PAUSE
+      // PAUSE
       case "pause":
         if(serverContruct.player.pause()){
           embed.setTitle("Pausing song.")
@@ -172,7 +172,6 @@ module.exports = {
               requested
             }
           })
-
         }
         else {
           const searchResults = await ytsr(songURL, {limit: 10});
@@ -195,6 +194,7 @@ module.exports = {
         }
 
         if(Array.isArray(song)){
+          const currentQueueLength = serverContruct.songs.length
           let content = "Processing:"
 
           song.map(s => {
@@ -211,7 +211,9 @@ module.exports = {
           })
           embed.setFooter({text:`Requested by: ${song[0].requested}`})
           
-          interaction.channel.send({embeds: [embed]})
+          if(currentQueueLength){
+            return interaction.channel.send({embeds: [embed]})
+          }
         }
         else {
           await interaction.followUp({ content: `Processing **${song.title}**...`, ephemeral: true })
@@ -227,11 +229,18 @@ module.exports = {
                 value: `[${song.url}](${song.url})`
               })
               embed.setFooter({text:`Requested by: ${song.requested}`})
-              console.log(`${guild.id}: Queued ${song.title}`)
+              console.log(`${interaction.guild.id || guild.id}: Queued ${song.title}`)
               return interaction.channel.send({embeds: [embed]})
             }
             serverContruct = memory.appendToServerQueue(interaction.guild.id, song)
           }
+        }
+
+        try {
+          await play(serverContruct, interaction.guild, song[0] || song, memory)
+        }
+        catch (err) {
+          return interaction.editReply(err)
         }
 
       break;
@@ -254,26 +263,38 @@ module.exports = {
       case "shuffle": 
         interaction.editReply("Gibson audio player is shuffling")
 
-        embed.setTitle(`Shuffling`)
+        embed.setTitle(`Shuffling ${serverContruct.songs.length} songs`)
         embed.setColor("#00a663")
         embed.setFooter({
           text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
         })
-        serverContruct.textChannel.send({embeds: [embed]})
-        
+        const currentSong = serverContruct.songs[0]
         const shuffleArr = serverContruct.songs
+        shuffleArr.shift()
+
         for (let i = shuffleArr.length - 1; i > 0; i--) {
           // Generate random number
-           const j = Math.floor(Math.random() * (i + 1))
-   
-           const temp = shuffleArr[i]
-           shuffleArr[i] = shuffleArr[j]
-           shuffleArr[j] = temp
+          const j = Math.floor(Math.random() * (i + 1))
+ 
+          const temp = shuffleArr[i]
+          shuffleArr[i] = shuffleArr[j]
+          shuffleArr[j] = temp
         }
+        
+        serverContruct.songs = [currentSong, ...shuffleArr]
+        embed.addFields({
+          name: `Playing: ${currentSong.title}`,
+          value: `Requested by ${currentSong.requested}`
+        })
+        shuffleArr.map((song,i) => {
+           embed.addFields({
+            name: `${[i+2]} - ${song.title}`,
+            value: `Requested by ${song.requested}`
+          })
+        })
+        serverContruct.textChannel.send({embeds: [embed]})
 
-        serverContruct.songs = shuffleArr
-
-        serverContruct = memory.setServerQueue(interaction.guild.id, shuffleArr)
+        return serverContruct = memory.setServerQueue(interaction.guild.id, serverContruct.songs)
       break;
 
       // SKIP
@@ -310,33 +331,16 @@ module.exports = {
         serverContruct.player.stop()
         serverContruct.connection.destroy()
         serverContruct = {}
-        serverContruct = memory.setServerConnection(interaction.guild.id, {songs:[]}, true)
+        return serverContruct = memory.setServerConnection(interaction.guild.id, {songs:[]}, true)
       break;
     }
 
-    try {
-      if(serverContruct.songs.length){
-        if(Array.isArray(song)){
-          await play(serverContruct, interaction.guild, song[0])
-        }
-        else {
-          await play(serverContruct, interaction.guild, song)
-        }
-      }
-    }
-    catch (err) {
-      //console.log(err)
-      //memory.setServerQueue(interaction.guild.id, [])
-      //queue.delete(interaction.guild.id)
-      //serverContruct.connection.destroy()
-      //serverContruct = memory.setServerConnection(interaction.guild.id, {songs:[]}, true)
-      return interaction.editReply(err)
-    }
+
   }
 }
 
 
-const play = async (serverContruct, guild, song) => {
+const play = async (serverContruct, guild, song, memory) => {
   if (!song) {
     queue.delete(guild.id)
     return
@@ -371,9 +375,8 @@ const play = async (serverContruct, guild, song) => {
     serverContruct.textChannel.send({embeds: [embed]})
   }
   catch(err){
-    console.error(err)
     serverContruct.textChannel.send(`There was an issue processing [${song.title}](${song.url})`)
-    console.log(`${guild.id}: There was an issue processing [${song.title}](${song.url}`)
+    console.log(`${guild.id}: There was an issue processing [${song.title}](${song.url}:\n`,err)
     
     serverContruct.songs.shift()
 
