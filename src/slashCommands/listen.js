@@ -287,7 +287,9 @@ module.exports = {
         })
 
         queueList.map((song,i) => {
-          songList += `\n${[i+2]} - ${song.title}`
+          if(songList.length<1000){
+            songList += `\n${[i+2]} - ${song.title}`
+          }
         })
         embed.addFields({
           name: `Next up:`,
@@ -366,7 +368,9 @@ module.exports = {
         })
         songList = ''
         shuffleArr.map((song,i) => {
-          songList += `\n${[i+2]} - ${song.title}`
+          if(songList.length<1000){
+            songList += `\n${[i+2]} - ${song.title}`
+          }
         })
         embed.addFields({
           name: `Next up:`,
