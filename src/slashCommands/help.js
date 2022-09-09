@@ -21,10 +21,12 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true })
     let embed = new MessageEmbed()
+    embed.setFooter({text:'Full documentation and invite link here: https://github.com/ttrreevvoorr/gibson#readme'})
     let command = interaction.options.getString('command')
+
     switch(command){
       case "dice":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/dice \`number:6\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -35,7 +37,7 @@ module.exports = {
         break
 
       case "commands":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/commands")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -46,7 +48,7 @@ module.exports = {
         break
 
       case "poll":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/poll \`question:\` \`choices:\` \`expires:30\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -57,7 +59,7 @@ module.exports = {
         break
 
       case "audioadd":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/audioadd \`triggers:\` \`mp3:\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -68,7 +70,7 @@ module.exports = {
         break
 
       case "addcommand":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/addcommand \`triggers:\` \`response:\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -79,7 +81,7 @@ module.exports = {
         break
 
       case "editcommand":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/editcommand \`trigger:\` \`response:\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -90,7 +92,7 @@ module.exports = {
         break
 
       case "deletecommand":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/deletecommand \`trigger:\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -101,7 +103,7 @@ module.exports = {
         break
 
       case "remind":
-        embed = new MessageEmbed()
+        //embed = new MessageEmbed()
         embed.setTitle("/remind \`channel:\` \`about:\` `in:`")
         embed.setColor("#5cf5f7")
         embed.addFields({
@@ -112,24 +114,40 @@ module.exports = {
         break
 
       case "listen":
-        embed = new MessageEmbed()
-        embed.setTitle("/listen \`play\` \`pause\` \`unpause\` \`shuffle\` \`skip\` \`stop\`")
+        //embed = new MessageEmbed()
+        embed.setTitle("/listen \`play\` \`pause\` \`unpause\` \`queue\`, \`remove\`, \`shuffle\` \`skip\` \`stop\`")
         embed.setColor("#5cf5f7")
         embed.addFields({
           name: `/listen play`, 
-          value: "Attach a YouTube or Soundcloud URL to play a song while in a voice channel. If a song is already being played, a queue is created. \n\`\`\`/listen play song:https://www.youtube.com/watch?v=iWa-6g-TbgI\`\`\`or\`\`\`/listen play song:Brucia la terra by Andrea Bocelli\`\`\`"
-        },{
+          value: "Attach a YouTube, Soundcloud, or Spotify playlist URL to play a song while in a voice channel. If a song is already being played, a queue is created. \n\`\`\`/listen play song:https://www.youtube.com/watch?v=iWa-6g-TbgI\`\`\`or\`\`\`/listen play song:Brucia la terra by Andrea Bocelli\`\`\`"
+        })
+        embed.addFields({
           name: `/listen pause`, 
           value: "Pauses the current track being played, if any. \n\`\`\`/listen pause\`\`\`"
-        },{
+        })
+        embed.addFields({
           name: `/listen unpause`, 
-          balue: "Resume the audio player where it was paused. \n\`\`\`/listen unpause\`\`\`"
-        },{
+          value: "Resume the audio player where it was paused. \n\`\`\`/listen unpause\`\`\`"
+        })
+        embed.addFields({
           name: `/listen stop`, 
           value: "Stops the audio player and deletes the queue. \n\`\`\`/listen stop\`\`\`"
-        },{
+        })
+        embed.addFields({
+          name: `/listen remove`, 
+          value: "Allows you to remove a song from the queue using its number in queue. The queue numbers are returned with both \`/listen queue\` and \`/listen shuffle\`. Keep in mind that the queue numbers will change as you remove them and as songs play. To ensure you are removing the correct song, use \`/listen queue\` before using. \`\`\`/listen remove number:3\`\`\`"
+        })
+        embed.addFields({
           name: `/listen skip`, 
           value: "Skips the current song and plays next song in queue, if any. \n\`\`\`/listen skip\`\`\`"
+        })
+        embed.addFields({
+          name: `/listen shuffle`, 
+          value: "Shuffles, or re-orders, all of the upcoming songs in queue, if any. \n\`\`\`/listen queue\`\`\`"
+        })
+        embed.addFields({
+          name: `/listen queue`, 
+          value: "SReturns the song currently playing along will all upcoming songs and their queue numbers. \`\`\`/listen queue\`\`\`"
         })
         return interaction.editReply({embeds: [embed]})
         break

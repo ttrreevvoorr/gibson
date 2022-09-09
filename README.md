@@ -13,7 +13,7 @@ This was originally written and created in August 2021. It has been 1 year since
 
 ## TODO:
 
-- Remove superflous spotify and fetch dependencies
+list- Remove superflous spotify and fetch dependencies
 - Provide a `/queue` command to return current song list
 
 ## Commands:
@@ -116,31 +116,108 @@ Example: `/remind channel:#general about:Don't forget, last call to RSVP for Str
 ---
 
 ### /listen
-- `/listen` `play:` 
+- `/listen` `play` `song:` 
 - `/listen` `pause` 
 - `/listen` `unpause` 
+- `/listen` `remove` `number:`
 - `/listen` `skip` 
 - `/listen` `stop` 
 - `/listen` `shuffle` 
 
-These commands allow Gibson to play music in voice channels. The above commands should be self explanitory, so only **/listen play** will be described below:
+<img width="450" src="https://i.imgur.com/O1IOqpy.png" alt="screenshot of Gibson's autocomplete response list on /listen">
+
+
+#### play
+
+You must be in a voice channel to use this command. Gibson will join the channel you are in, find the song you requested it, and begin playing the song (via YouTube) in the voice channel. If a song is already being played, or there is a queue, the song is added to the end of the queue.
 
 | param        | Description                  | Example           |
 |--------------|------------------------------|-------------------|
-| play         | The song you want to play    | Careless Whisper by Geoerge Michaels |
-
+| song         | The song you want to play, by song name and artist, Youtube url, Soundcloud url, or Spotify playlist url.    | Careless Whisper by George Michael |
 
 Examples:
 - `/listen play: Careless Whisper by Geoerge Michaels`
 - `/listen play: https://www.youtube.com/watch?v=izGwDsrQ1eQ`
 - `/listen play: https://soundcloud.com/goodsociety/lophiile-see-thru`
+- `/listen play: https://open.spotify.com/playlist/5ZYRTvwmGrp5016IgpzdVP?si=c6e2e8b90bf9445d`
 
-<img  width="400" src="https://imgur.com/TOkoQ9i.png" alt="screenshot of a gibson playing music">
+<img  width="400" src="https://imgur.com/TOkoQ9i.png" alt="screenshot of a Gibson's channel messages when playing music">
+
+#### pause
+
+Pauses Gibson. To resume, see `/listen unpause`
+
+Useage:
+```
+/listen pause
+```
+
+#### unpause
+
+Resumes Gibson if paused. See `/listen pause`
+
+Useage:
+```
+/listen unpause
+```
+
+#### remove
+
+Allows you to remove a song from the queue using its number in queue. The queue numbers are returned with both `/listen queue` and `/listen shuffle`. Keep in mind that the queue numbers will change as you remove them and as songs play. To ensure you are removing the correct song, use `/listen queue` before using `/listen remove`
+
+| param        | Description                  | Example           |
+|--------------|------------------------------|-------------------|
+| number       | The song number in queue that you want removed   | 4 |
+
+
+Examples:
+- `/listen remove: 4`
+
+<img  width="350" src="https://i.imgur.com/9DjrIGR.png" alt="screenshot of a Gibson returning a queue, and a song removal message">
+
+#### queue
+
+Returns the song currently playing along will all upcoming songs and their queue numbers.
+
+Useage:
+```
+/listen queue
+```
+
+#### skip
+
+Stops playing the current song, and begins playing the next song in queue.
+
+Useage:
+```
+/listen skip
+```
+
+#### stop
+
+Halts the Gibson audio player, removes all songs from queue, and leaves the voice channel.
+
+Useage:
+```
+/listen stop
+```
+
+#### shuffle
+
+Shuffles, or re-orders, all of the upcoming songs in queue. This returns queue numbers that can be used in `/listen remove number:#`
+
+Useage:
+```
+/listen shuffle
+```
+
+<img width="300" src="https://i.imgur.com/rMG2oyK.png" alt="screenshot of Gibson's response to /listen shuffle, showing the resulting queue">
 
 ---
 
 
 ### /poll
+
 `/poll` `question:` `choices:` `expires:`
 
 Gibson will send a predetermined message (about) in a specific channel in X seconds/hours/minutes/days.

@@ -27,7 +27,7 @@ module.exports = {
     subcommand
     .setName("play")
     .setDescription("Plays a song in the voice channel you're in")
-    .addStringOption(option => option.setName("song").setDescription("Song artist and title, or a YouTube or Soundcloud URL").setRequired(true)))
+    .addStringOption(option => option.setName("song").setDescription("Song artist and title, or a YouTube, Soundcloud, or Spotify playlist URL").setRequired(true)))
   .addSubcommand(subcommand =>
     subcommand
     .setName("pause")
@@ -36,7 +36,7 @@ module.exports = {
     subcommand
     .setName("remove")
     .setDescription("Removes a song by its placement in queue")
-    .addStringOption(option => option.setName("songid").setDescription("Use /listen queue to find the songId you want to remove from queue").setRequired(true)))
+    .addStringOption(option => option.setName("number").setDescription("Use /listen queue to find the queue number you want to remove from queue").setRequired(true)))
   .addSubcommand(subcommand =>
     subcommand
     .setName("skip")
@@ -271,6 +271,9 @@ module.exports = {
       // QUEUE
       case "queue": 
         interaction.editReply("Gibson audio player returning queue")
+        if(!serverContruct.songs.length){
+            return interaction.editReply("There is no active queue to return.")
+        }
         embed.setTitle(`Song Queue:`)
         embed.setColor("#c5d9ff")
         embed.setFooter({
@@ -287,13 +290,13 @@ module.exports = {
         })
 
         queueList.map((song,i) => {
-          if(songList.length<1000){
+          if(songList.length < 900){
             songList += `\n${[i+2]} - ${song.title}`
           }
         })
         embed.addFields({
           name: `Next up:`,
-          value: songList
+          value: songList || ""
         })
 
         serverContruct.textChannel.send({embeds: [embed]})
@@ -303,17 +306,27 @@ module.exports = {
       // REMOVE
       case "remove": 
         interaction.editReply("Removing song from queue...")
-        const songInt = parseInt(interaction.options.getString("songid"))-1
+        
+        const numberInput = interaction.options.getString("number")
+        //if(numberInput.includes(",")){
+        //  numberInput = numberInput.split(',')
+        //  numberInput.sort(a,b=>b-a).map(number => {
+        //    const index = parseInt(number)
+        //    queueList.splice(index,0)
+        //  })
+        //} 
+        //else {
+        //
+        //}
 
+        const songInt = parseInt(numberInput)-1
         if(!songInt || typeof songInt !== 'number' || songInt <= 0){
           return interaction.editReply("Gibson audio player can not remove that songId")
         }
         
         queueList = serverContruct.songs
         const removedSong = queueList.splice(songInt,1)[0]
-        console.log(queueList)
-        console.log(removedSong)
-        embed.setTitle(`Removing ${removedSong.title} from queue:`)
+        embed.setTitle(`Removing ${removedSong.title} from queue`)
         embed.setColor("#0b5e70")
         embed.setFooter({
           text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
@@ -321,7 +334,6 @@ module.exports = {
         
         serverContruct = memory.setServerQueue(interaction.guild.id, queueList)
         return serverContruct.textChannel.send({embeds: [embed]})
-
       break;
 
       // UNPAUSE
@@ -341,6 +353,9 @@ module.exports = {
       // SHUFFLE
       case "shuffle": 
         interaction.editReply("Gibson audio player is shuffling")
+        if(!serverContruct.songs.length){
+            return interaction.editReply("There is no active queue to return.")
+        }
 
         embed.setTitle(`Shuffling ${serverContruct.songs.length} songs`)
         embed.setColor("#00a663")
@@ -368,7 +383,7 @@ module.exports = {
         })
         songList = ''
         shuffleArr.map((song,i) => {
-          if(songList.length<1000){
+          if(songList.length < 900){
             songList += `\n${[i+2]} - ${song.title}`
           }
         })
