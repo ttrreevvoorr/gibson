@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { readFile } = require("../utils/helpers")
 const { MessageEmbed } = require("discord.js")
-const voiceFileName = '../../serverCommands/voiceCommands.json'
-const textFileName = '../../serverCommands/textCommands.json'
+const voiceFileName = './serverCommands/voiceCommands.json'
+const textFileName = './serverCommands/textCommands.json'
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -57,7 +57,10 @@ module.exports = {
         return 0
       }).slice(start).every(async (cmd, i) => {
         if(i>=24) return false  
-        embed.addField(`${cmd.response.length > 15 ? cmd.response.slice(0, 12) + "..." : cmd.response }`,`${cmd.triggers}`, true)
+        embed.addFields({
+          name:`${cmd.response.length > 15 ? cmd.response.slice(0, 12) + "..." : cmd.response }`,
+          value: `${cmd.triggers}`
+        })
       })
       embeds.push(embed)
     }

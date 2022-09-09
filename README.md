@@ -16,7 +16,8 @@ This was originally written and created in August 2021. It has been 1 year since
 1. [Commands](#commands)
     - [/audioadd](#audioadd)
     - [/addCommand](#addcommand)
-    - [/deletecommand](#deletecommand)
+    - [/deleteCommand](#deletecommand)
+    - [/editCommand](#editcommand)
     - [/dice](#dice)
     - [/remind](#remind)
     - [/listen](#listen)
@@ -28,12 +29,6 @@ This was originally written and created in August 2021. It has been 1 year since
       - [/listen skip](#listenskip)
       - [/listen shuffle](#listenshuffle)
     - [/poll](#poll)
-
-
-## TODO:
-
-list- Remove superflous spotify and fetch dependencies
-- Provide a `/queue` command to return current song list
 
 ## Commands:<a name="commands"></a>
 
