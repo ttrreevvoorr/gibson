@@ -34,6 +34,11 @@ module.exports = {
     .setDescription("Pauses the current track"))
   .addSubcommand(subcommand =>
     subcommand
+    .setName("remove")
+    .setDescription("Removes a song by its placement in queue")
+    .addStringOption(option => option.setName("songid").setDescription("Use /listen queue to find the songId you want to remove from queue").setRequired(true)))
+  .addSubcommand(subcommand =>
+    subcommand
     .setName("skip")
     .setDescription("Skips the song playing"))
   .addSubcommand(subcommand =>
@@ -47,7 +52,11 @@ module.exports = {
   .addSubcommand(subcommand =>
     subcommand
     .setName("shuffle")
-    .setDescription("Shuffles the existing song queue")),
+    .setDescription("Shuffles the existing song queue"))
+  .addSubcommand(subcommand =>
+    subcommand
+    .setName("queue")
+    .setDescription("Returns the current song queue")),
 
   async execute(interaction, memory) {
     await interaction.deferReply({ ephemeral: true })
@@ -118,12 +127,15 @@ module.exports = {
     }
     
     const embed = new MessageEmbed()
-    let song,
+    let currentSong,
+      song,
       songInfo,
+      songList,
       playlistInfo = {},
       youtubeURL = "",
       soundcloudURL = "",
-      requested = interaction.member.nickname || interaction.member.user.username
+      requested = interaction.member.nickname || interaction.member.user.username,
+      queueList = []
       
     switch(interaction.options.getSubcommand()){
       // PAUSE
@@ -256,6 +268,60 @@ module.exports = {
 
       break;
 
+      // QUEUE
+      case "queue": 
+        interaction.editReply("Gibson audio player returning queue")
+        embed.setTitle(`Song Queue:`)
+        embed.setColor("#c5d9ff")
+        embed.setFooter({
+          text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
+        })
+        currentSong = serverContruct.songs[0]
+        queueList = serverContruct.songs
+        queueList.shift()
+
+        songList = ''
+        embed.addFields({
+          name: `Currently playing: ${currentSong.title}`,
+          value: `Requested by ${currentSong.requested}`
+        })
+
+        queueList.map((song,i) => {
+          songList += `\n${[i+2]} - ${song.title}`
+        })
+        embed.addFields({
+          name: `Next up:`,
+          value: songList
+        })
+
+        serverContruct.textChannel.send({embeds: [embed]})
+        return serverContruct = memory.setServerQueue(interaction.guild.id, [currentSong, ...serverContruct.songs])
+      break;
+
+      // REMOVE
+      case "remove": 
+        interaction.editReply("Removing song from queue...")
+        const songInt = parseInt(interaction.options.getString("songid"))-1
+
+        if(!songInt || typeof songInt !== 'number' || songInt <= 0){
+          return interaction.editReply("Gibson audio player can not remove that songId")
+        }
+        
+        queueList = serverContruct.songs
+        const removedSong = queueList.splice(songInt,1)[0]
+        console.log(queueList)
+        console.log(removedSong)
+        embed.setTitle(`Removing ${removedSong.title} from queue:`)
+        embed.setColor("#0b5e70")
+        embed.setFooter({
+          text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
+        })
+        
+        serverContruct = memory.setServerQueue(interaction.guild.id, queueList)
+        return serverContruct.textChannel.send({embeds: [embed]})
+
+      break;
+
       // UNPAUSE
       case "unpause": 
         embed.setTitle(`Resuming: ${serverContruct.songs[0].title}`)
@@ -279,7 +345,7 @@ module.exports = {
         embed.setFooter({
           text: `Requested by: ${interaction.member.nickname || interaction.member.user.username}`
         })
-        const currentSong = serverContruct.songs[0]
+        currentSong = serverContruct.songs[0]
         const shuffleArr = serverContruct.songs
         shuffleArr.shift()
 
@@ -293,15 +359,18 @@ module.exports = {
         }
         
         serverContruct.songs = [currentSong, ...shuffleArr]
+
         embed.addFields({
-          name: `Playing: ${currentSong.title}`,
+          name: `Currently playing: ${currentSong.title}`,
           value: `Requested by ${currentSong.requested}`
         })
+        songList = ''
         shuffleArr.map((song,i) => {
-           embed.addFields({
-            name: `${[i+2]} - ${song.title}`,
-            value: `Requested by ${song.requested}`
-          })
+          songList += `\n${[i+2]} - ${song.title}`
+        })
+        embed.addFields({
+          name: `Next up:`,
+          value: songList
         })
         serverContruct.textChannel.send({embeds: [embed]})
 
