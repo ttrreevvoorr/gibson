@@ -1,6 +1,6 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders')
-const { readFile } = require("../helpers")
+const { readFile } = require("../utils/helpers")
 const fs = require('fs')
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
 
     try {
       // Update the voice command list
-      const fileName = 'textCommands.json'
+      const fileName = './serverCommands/textCommands.json'
       let tcFile = await readFile(fileName)
 
       // Do any of these triggers exist?

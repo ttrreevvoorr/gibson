@@ -9,7 +9,7 @@ const { messageCreate } = require("./events/messageCreate")
 
 const token = process.env.TOKEN
 
-const MemoryMom = require("./MemoryMom")
+const MemoryMom = require("./utils/MemoryMom")
 const memory = new MemoryMom()
 
 const client = new Discord.Client({
@@ -21,28 +21,27 @@ const client = new Discord.Client({
     Intents.FLAGS.DIRECT_MESSAGE_TYPING,
     Intents.FLAGS.GUILD_VOICE_STATES,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+    // Intents.FLAGS.GUILDS,
+    // Intents.FLAGS.GUILD_MEMBERS,
+    // Intents.FLAGS.GUILD_BANS,
+    // Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+    // Intents.FLAGS.GUILD_INTEGRATIONS,
+    // Intents.FLAGS.GUILD_WEBHOOKS,
+    // Intents.FLAGS.GUILD_INVITES,
+    // Intents.FLAGS.GUILD_VOICE_STATES,
+    // Intents.FLAGS.GUILD_PRESENCES,
+    // Intents.FLAGS.GUILD_MESSAGES,
+    // Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    // Intents.FLAGS.GUILD_MESSAGE_TYPING,
+    // Intents.FLAGS.DIRECT_MESSAGES,
+    // Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    // Intents.FLAGS.DIRECT_MESSAGE_TYPING
   ]
 })
 
-// Intents.FLAGS.GUILDS,
-// Intents.FLAGS.GUILD_MEMBERS,
-// Intents.FLAGS.GUILD_BANS,
-// Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-// Intents.FLAGS.GUILD_INTEGRATIONS,
-// Intents.FLAGS.GUILD_WEBHOOKS,
-// Intents.FLAGS.GUILD_INVITES,
-// Intents.FLAGS.GUILD_VOICE_STATES,
-// Intents.FLAGS.GUILD_PRESENCES,
-// Intents.FLAGS.GUILD_MESSAGES,
-// Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-// Intents.FLAGS.GUILD_MESSAGE_TYPING,
-// Intents.FLAGS.DIRECT_MESSAGES,
-// Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-// Intents.FLAGS.DIRECT_MESSAGE_TYPING
-
 // Initiate commands:
 client.commands = new Collection()
-const commandFiles = fs.readdirSync("./slashCommands").filter(file => file.endsWith(".js"))
+const commandFiles = fs.readdirSync("./src/slashCommands").filter(file => file.endsWith(".js"))
 for (const file of commandFiles) {
   const command = require(`./slashCommands/${file}`)
   client.commands.set(command.data.name, command)
@@ -52,16 +51,13 @@ client.on("ready", () => {
 })
 
 client.on("messageCreate", messageCreate)
-
 // client.on("voiceStateUpdate", (msg, err) => {})
-
 // client.on("guildMemberSpeaking", (msg, err) => {})
 
 client.on("interactionCreate", async interaction => {
   if (!interaction.isCommand()) return
   
   const command = client.commands.get(interaction.commandName)
-
   if (!command) return
 
   try {
@@ -77,9 +73,9 @@ client.on("interactionCreate", async interaction => {
 })
 
 client.on("disconnect", message => {
-  console.log("dying...")
+  console.log("Dying...")
   console.log(message)
-  process.exit(1)
+ // process.exit(1)
 })
 
 client.login(token)

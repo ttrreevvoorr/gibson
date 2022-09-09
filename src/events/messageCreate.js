@@ -7,7 +7,7 @@ const {
 
 const player = createAudioPlayer()
 const { join } = require('path')
-const { readFile } = require("../helpers")
+const { readFile } = require("../utils/helpers")
 let botConfig = { "inVoice":  false }
 
 const Log = {
@@ -44,8 +44,8 @@ const Log = {
   }
 }
 
-const voiceFileName = 'voiceCommands.json'
-const textFileName = 'textCommands.json'
+const voiceFileName = './serverCommands/voiceCommands.json'
+const textFileName = './serverCommands/textCommands.json'
 
 const prefix = "!"
 
