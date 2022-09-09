@@ -11,14 +11,33 @@ This was originally written and created in August 2021. It has been 1 year since
 
 <https://discord.com/oauth2/authorize?client_id=880346290490322975&permissions=37080919104&scope=bot+applications.commands>
 
+
+## Table of contents
+1. [Commands](#commands)
+    - [/audioadd](#audioadd)
+    - [/addCommand](#addcommand)
+    - [/deletecommand](#deletecommand)
+    - [/dice](#dice)
+    - [/remind](#remind)
+    - [/listen](#listen)
+      - [/listen play](#listenplay)
+      - [/listen pause](#listenpause)
+      - [/listen unpause](#listenunpause)
+      - [/listen remove](#listenremove)
+      - [/listen queue](#listenqueue)
+      - [/listen skip](#listenskip)
+      - [/listen shuffle](#listenshuffle)
+    - [/poll](#poll)
+
+
 ## TODO:
 
 list- Remove superflous spotify and fetch dependencies
 - Provide a `/queue` command to return current song list
 
-## Commands:
+## Commands:<a name="commands"></a>
 
-### /audioAdd
+### /audioAdd<a name="audioadd"></a>
 `/audioAdd` `triggers:` `mp3:`
 
 Gibson wil play an audio file in a voice channel if any of `triggers` is sent in any text channel by a user in voice chat with Gibson.
@@ -32,7 +51,7 @@ Example: `/audioadd triggers:nope mp3:https://www.somewebsite.com/sound/nope.mp3
 
 ---
 
-### /addCommand
+### /addCommand<a name="addcommand"></a>
 `/addCommand` `triggers:` `reaction:`
 
 Adds a bang command `!command` to Gibson, allowing predetermined responses.
@@ -50,7 +69,7 @@ Now when sending the message `!minecraft` or `!mc` in any text channel, Gibson w
 
 ---
 
-### /deletecommand
+### /deletecommand<a name="deletecommand"></a>
 `/deltecommand` `trigger:`
 
 Adds a bang command `!command` to Gibson, allowing predetermined responses.
@@ -68,7 +87,7 @@ Now when sending the message `!minecraft` or `!mc` in any text channel, Gibson w
 ---
 
 
-### /dice
+### /dice<a name="dice"></a>
 `/dice` `number:`
 
 Rolls a dice for you, with number being the max sides of the dice. Defaults to 6.
@@ -83,7 +102,7 @@ Example: `/dice number:12`
 
 ---
 
-### /help
+### /help<a name="help"></a>
 `/help` `command:`
 
 Returns information about a command within Discord, similar to `man` or `manual`.
@@ -98,7 +117,7 @@ Returns information about a command within Discord, similar to `man` or `manual`
 
 ---
 
-### /remind
+### /remind<a name="remind"></a>
 `/remind` `channel:` `about:` `in:`
 
 Gibson will send a predetermined message (about) in a specific channel in X seconds/hours/minutes/days.
@@ -115,7 +134,7 @@ Example: `/remind channel:#general about:Don't forget, last call to RSVP for Str
 
 ---
 
-### /listen
+### /listen<a name="listen"></a>
 - `/listen` `play` `song:` 
 - `/listen` `pause` 
 - `/listen` `unpause` 
@@ -127,7 +146,7 @@ Example: `/remind channel:#general about:Don't forget, last call to RSVP for Str
 <img width="450" src="https://i.imgur.com/O1IOqpy.png" alt="screenshot of Gibson's autocomplete response list on /listen">
 
 
-#### play
+#### play<a name="listenplay"></a>
 
 You must be in a voice channel to use this command. Gibson will join the channel you are in, find the song you requested it, and begin playing the song (via YouTube) in the voice channel. If a song is already being played, or there is a queue, the song is added to the end of the queue.
 
@@ -143,7 +162,7 @@ Examples:
 
 <img  width="400" src="https://imgur.com/TOkoQ9i.png" alt="screenshot of a Gibson's channel messages when playing music">
 
-#### pause
+#### pause<a name="listenpause"></a>
 
 Pauses Gibson. To resume, see `/listen unpause`
 
@@ -152,7 +171,7 @@ Useage:
 /listen pause
 ```
 
-#### unpause
+#### unpause<a name="listenunpause"></a>
 
 Resumes Gibson if paused. See `/listen pause`
 
@@ -161,7 +180,7 @@ Useage:
 /listen unpause
 ```
 
-#### remove
+#### remove<a name="listenremove"></a>
 
 Allows you to remove a song from the queue using its number in queue. The queue numbers are returned with both `/listen queue` and `/listen shuffle`. Keep in mind that the queue numbers will change as you remove them and as songs play. To ensure you are removing the correct song, use `/listen queue` before using `/listen remove`
 
@@ -171,11 +190,11 @@ Allows you to remove a song from the queue using its number in queue. The queue 
 
 
 Examples:
-- `/listen remove: 4`
+- `/listen remove: 8`
 
-<img  width="350" src="https://i.imgur.com/9DjrIGR.png" alt="screenshot of a Gibson returning a queue, and a song removal message">
+<img  width="300" src="https://i.imgur.com/9DjrIGR.png" alt="screenshot of a Gibson returning a queue, and a song removal message">
 
-#### queue
+#### queue<a name="listenqueue"></a>
 
 Returns the song currently playing along will all upcoming songs and their queue numbers.
 
@@ -184,7 +203,7 @@ Useage:
 /listen queue
 ```
 
-#### skip
+#### skip<a name="listenskip"></a>
 
 Stops playing the current song, and begins playing the next song in queue.
 
@@ -193,7 +212,7 @@ Useage:
 /listen skip
 ```
 
-#### stop
+#### stop<a name="listenstop"></a>
 
 Halts the Gibson audio player, removes all songs from queue, and leaves the voice channel.
 
@@ -202,7 +221,7 @@ Useage:
 /listen stop
 ```
 
-#### shuffle
+#### shuffle<a name="listenshuffle"></a>
 
 Shuffles, or re-orders, all of the upcoming songs in queue. This returns queue numbers that can be used in `/listen remove number:#`
 
@@ -216,7 +235,7 @@ Useage:
 ---
 
 
-### /poll
+### /poll<a name="listenpoll"></a>
 
 `/poll` `question:` `choices:` `expires:`
 
