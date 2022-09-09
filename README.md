@@ -11,12 +11,6 @@ This was originally written and created in August 2021. It has been 1 year since
 
 <https://discord.com/oauth2/authorize?client_id=880346290490322975&permissions=37080919104&scope=bot+applications.commands>
 
-<p align="center">
-	<a target="_blank" href="https://discord.gg/XJ3D33zGTz"><img width="200" src="https://i.imgur.com/kQ481n2.png" alt="gibson's avatar image"></a>
-</p>
-
-
-
 ## Table of contents
 1. [Commands](#commands)
     - [/audioadd](#audioadd)
