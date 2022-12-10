@@ -114,15 +114,16 @@ module.exports = {
       })
 
       serverContruct.player.on(AudioPlayerStatus.AutoPaused, () => {
-        embed.setTitle("Something went wrong")
-        embed.setColor("#FF0000")
-        embed.addFields({
-          name: `Gibson failed to operate accordinfly`, 
-          value: `Please try again shortly.`
-        })
-        return interaction.channel.send({embeds: [embed]})
+	if(interaction.options.getSubcommand() !== 'stop'){
+          embed.setTitle("Something went wrong")
+          embed.setColor("#FF0000")
+          embed.addFields({
+            name: `Gibson failed to operate accordingly`, 
+            value: `Please try again shortly.`
+          })
+          return interaction.channel.send({embeds: [embed]})
+	}
       })
-
       memory.setServerConnection(interaction.guild.id, serverContruct)
     }
     

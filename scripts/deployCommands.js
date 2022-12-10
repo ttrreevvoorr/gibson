@@ -7,7 +7,7 @@ const clientId = process.env.CLIENT_ID,
       token = process.env.TOKEN
 
 const commands = [];
-const commandFiles = fs.readdirSync('src/slashCommands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('../src/slashCommands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
   const command = require(`../src/slashCommands/${file}`)
