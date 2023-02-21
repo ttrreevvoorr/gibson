@@ -28,7 +28,7 @@ module.exports = {
 
     try {
       // Update the voice command list
-      const fileName = 'textCommands.json'
+      const fileName ='./serverCommands/textCommands.json'
       let tcFile = await readFile(fileName)
       tcFile[interaction.guild.id] = tcFile[interaction.guild.id] || { textCommands: [] }
       // Do any of these triggers exist?
