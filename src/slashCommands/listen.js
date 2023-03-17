@@ -13,6 +13,8 @@ const {
   joinVoiceChannel,
   createAudioPlayer,
   createAudioResource,
+  NoSubscriberBehavior,
+  VoiceConnectionStatus,
   AudioPlayerStatus
 } = require("@discordjs/voice")
 
@@ -80,7 +82,7 @@ module.exports = {
         guildId:        interaction.guild.id,
         adapterCreator: interaction.guild.voiceAdapterCreator
       })
-      serverContruct.player = createAudioPlayer()
+      serverContruct.player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Play }})
       serverContruct.connection = connection
       serverContruct.connection.subscribe(serverContruct.player)
       serverContruct = {
@@ -113,6 +115,14 @@ module.exports = {
         return await play(serverContruct, interaction.guild, serverContruct.songs[0], memory)
       })
 
+      connection.on("stateChange", (oldState, newState) => {
+        if (
+          oldState.status === VoiceConnectionStatus.Ready &&
+          newState.status === VoiceConnectionStatus.Connecting) {
+          connection.configureNetworking();
+        }
+      });
+
       serverContruct.player.on(AudioPlayerStatus.AutoPaused, () => {
 	if(interaction.options.getSubcommand() !== 'stop'){
           embed.setTitle("Something went wrong")
@@ -121,6 +131,9 @@ module.exports = {
             name: `Gibson failed to operate accordingly`, 
             value: `Please try again shortly.`
           })
+          serverContruct.player.stop()
+          serverContruct.connection.subscribe(serverContruct.player)
+          serverContruct.connection.destroy()
           return interaction.channel.send({embeds: [embed]})
 	}
       })
