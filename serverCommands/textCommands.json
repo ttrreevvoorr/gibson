@@ -107,6 +107,12 @@
           "tingy"
         ],
         "response": "https://media.discordapp.net/attachments/900796139291414548/1087221879447748718/IMG_0973.jpg?width=545&height=517"
+      },
+      {
+        "triggers": [
+          "showertime"
+        ],
+        "response": "https://i.imgur.com/MXCQIQ1.png"
       }
     ]
   },
