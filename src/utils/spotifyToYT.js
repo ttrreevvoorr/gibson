@@ -40,8 +40,8 @@ module.exports = {
       var songs = [];
       for (const song of tracks) {
         if(song){
-          let search = await ytsr(
-            `${song.name} ${song.artists.map((x) => x.name).join(" ")}`,
+	  let search = await ytsr(
+            `${song.name} ${song.artist} audio`,
             { limit: 1 }
           );
           songs.push({title:String(song.name),url:search.items[0].url});

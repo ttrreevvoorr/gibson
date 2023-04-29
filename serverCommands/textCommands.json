@@ -1,5 +1,122 @@
 {
-  "serverId": {
+  "879445670040330250": {
+    "textCommands": [
+      {
+        "triggers": [
+          "mc",
+          "minecraft"
+        ],
+        "response": "0.0.0.0"
+      },
+      {
+        "triggers": [
+          "test"
+        ],
+        "response": "reaction"
+      },
+      {
+        "triggers": [
+          "buttface"
+        ],
+        "response": "great guy"
+      }
+    ]
+  },
+  "831412566865215530": {
+    "textCommands": [
+      {
+        "triggers": [
+          "bedtimestar"
+        ],
+        "response": "https://cdn.discordapp.com/attachments/900796139291414548/976163041886498836/unknown.png"
+      },
+      {
+        "triggers": [
+          "thirstforblood"
+        ],
+        "response": "https://cdn.discordapp.com/attachments/831412567506288663/995023978601128006/IMG_3288.jpg"
+      },
+      {
+        "triggers": [
+          "sleepytime"
+        ],
+        "response": "https://imgur.com/a/RXl5TWn"
+      },
+      {
+        "triggers": [
+          "sleepy"
+        ],
+        "response": "https://i.imgur.com/L90MKKT.jpg"
+      },
+      {
+        "triggers": [
+          "gm"
+        ],
+        "response": "https://i.pinimg.com/736x/98/13/e9/9813e94adab58bc108a3fce44a8ae8b3.jpg"
+      },
+      {
+        "triggers": [
+          "bedtimegoop"
+        ],
+        "response": "https://media.discordapp.net/attachments/831412567506288663/1015148776316469258/unknown.png"
+      },
+      {
+        "triggers": [
+          "beddybear"
+        ],
+        "response": "https://i.ytimg.com/vi/KutoOELX4ko/maxresdefault.jpg"
+      },
+      {
+        "triggers": [
+          "shlump"
+        ],
+        "response": "https://pbs.twimg.com/media/EuHJYgAXUAACWVT?format=png&name=small"
+      },
+      {
+        "triggers": [
+          "mimis"
+        ],
+        "response": "https://imgur.com/U3jBrJ1"
+      },
+      {
+        "triggers": [
+          "blanky"
+        ],
+        "response": "https://i.imgur.com/s7SaTos.jpeg"
+      },
+      {
+        "triggers": [
+          "pjs"
+        ],
+        "response": "https://i.imgur.com/c27Aml6.jpg"
+      },
+      {
+        "triggers": [
+          "westendgirls"
+        ],
+        "response": "https://www.youtube.com/watch?v=p3j2NYZ8FKs"
+      },
+      {
+        "triggers": [
+          "readyforbed"
+        ],
+        "response": "https://i.imgur.com/xe0FA7f.jpg"
+      },
+      {
+        "triggers": [
+          "tingy"
+        ],
+        "response": "https://media.discordapp.net/attachments/900796139291414548/1087221879447748718/IMG_0973.jpg?width=545&height=517"
+      },
+      {
+        "triggers": [
+          "showertime"
+        ],
+        "response": "https://i.imgur.com/MXCQIQ1.png"
+      }
+    ]
+  },
+  "1087099486725210202": {
     "textCommands": [
       {
         "triggers": [
