@@ -113,6 +113,12 @@
           "showertime"
         ],
         "response": "https://i.imgur.com/MXCQIQ1.png"
+      },
+      {
+        "triggers": [
+          "hater"
+        ],
+        "response": "Hating on people is so fun. I'm a hater fr. I wake up everyday ready to spread negativity and hopefully ruin lives."
       }
     ]
   },

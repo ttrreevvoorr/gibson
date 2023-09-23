@@ -107,8 +107,8 @@ module.exports = {
         serverContruct = memory.setServerQueue(interaction.guild.id, serverContruct.songs)
 
         if(!serverContruct.songs.length){
-          serverContruct.player.stop()
-          serverContruct.connection.destroy()
+          serverContruct.player?.stop()
+          serverContruct.connection?.destroy()
           serverContruct = {}
           return serverContruct = memory.setServerConnection(interaction.guild.id, {songs:[]}, true)
         }
@@ -243,8 +243,8 @@ module.exports = {
           embed.setTitle("Queued:")
           embed.setColor("#00a663")
           embed.addFields({
-            name: `${playlistInfo.info.name}:`, 
-            value: `${playlistInfo.info.external_urls.spotify}`
+            name: `${playlistInfo?.info?.name}:`, 
+            value: `https://open.spotify.com/playlist/${playlistInfo.info?.uri.split(":")[2]}`
           })
           embed.setFooter({text:`Requested by: ${song[0].requested}`})
           

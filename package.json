@@ -25,6 +25,7 @@
     "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
+    "@distube/ytdl-core": "^4.13.1",
     "discord-api-types": "^0.22.0",
     "discord-speech-recognition": "^1.0.6",
     "discord.js": "^13.1.0",
@@ -37,7 +38,7 @@
     "spotify-url-info": "^3.1.7",
     "spotify-web-api-node": "^5.0.2",
     "ytdl": "^1.4.1",
-    "ytdl-core": "^4.11.4",
+    "ytdl-core": "npm:@distube/ytdl-core@^4.11.10",
     "ytsr": "^3.8.1"
   }
 }

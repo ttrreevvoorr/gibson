@@ -68,7 +68,7 @@ const pollEmbed = async (interaction, title, options, timeout = 30, emojiList = 
           voterInfo.set(user.id, { emoji: reaction.emoji.name })
         }
         if(reaction.emoji.name){
-          emojiInfo[reaction.emoji.name] ? emojiInfo[reaction.emoji.name].votes += 1 : emojiInfo[reaction.emoji.name].votes = 1
+          emojiInfo[reaction.emoji.name] ? emojiInfo[reaction.emoji.name].votes += 1 : emojiInfo[reaction.emoji.name] = { votes: 1 } 
         }
         totalVotes += 1
       }
