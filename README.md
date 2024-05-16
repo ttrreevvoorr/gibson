@@ -3,7 +3,7 @@
 </p>
 
 # No longer supported
-Sorry. This code was written in a weekend, and wasn't built the way it should have been. Features were rushed, and has resulted in instability and crashed as it has been used more and more.
+Sorry. This code was written in a weekend, and wasn't built the way it should have been. Features were rushed, and resulted in instability and crashes as it was used more and more.
 A newer version of this may come in the future, likely written in a different language.
 Thanks for using Gibson.
 
